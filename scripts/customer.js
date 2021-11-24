@@ -38,10 +38,12 @@ Customer.prototype.withdrawBalance = function (amount) {
   this._balance = this._balance - amount;
 };
 
-Customer.prototype.buyPizza = function () { }
+Customer.prototype.buyPizza = function (orderedPizzaName) {
+  
+}
 
 Customer.prototype.eatPizza = function () {
-  
+
 }
 
 Customer.prototype.eatPizzaAsync = function (callback) {
