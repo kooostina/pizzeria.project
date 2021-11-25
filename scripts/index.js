@@ -16,10 +16,20 @@ var mafia = new Pizzeria('Mafia', [
 
 var tom = new Customer('Tom', 0, 50);
 
-var orderedPizza = mafia.orderPizza('Cheesy', 17);
+// var orderedPizza = mafia.orderPizza('Risotto', 17);
 
-console.log('orderedPizza', orderedPizza);
+// console.log('orderedPizza', orderedPizza);
+tom.setPizzeria(mafia);
+console.log('chosen pizzeria', tom.getPizzeria());
+var boughtPizza = tom.buyPizza('Cheesy', mafia);
+console.log('bought pizza', boughtPizza);
+tom.eatPizza(boughtPizza);
+
+console.log('pizzas in customer stomach', tom.getPizzas());
+console.log('pizzas in pizzeria fridge', mafia.getFrozenPizzas());
 
 console.log('pizzeria balance', mafia.getBalance());
+console.log('customer balance', tom.getBalance());
 
 console.log(mafia);
+console.log(tom);

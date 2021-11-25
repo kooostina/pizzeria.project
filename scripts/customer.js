@@ -1,9 +1,9 @@
 function Customer(name, satisfaction, balance) {
   this._name = name;
-  this._satisfaction = satisfaction || 0;
-  this._pizzas = [];
+  this._satisfaction = satisfaction;
+  this._pizzasInStomach = [];
   this._pizzeria = null;
-  this._balance = balance || 0;
+  this._balance = balance;
 }
 
 Customer.prototype.getName = function () {
@@ -26,7 +26,7 @@ Customer.prototype.setPizzeria = function (pizzeria) {
   this._pizzeria = pizzeria;
 };
 
-Customer.prototype.getBalance = function (amount) {
+Customer.prototype.getBalance = function () {
   return this._balance;
 };
 
@@ -39,12 +39,19 @@ Customer.prototype.withdrawBalance = function (amount) {
 };
 
 Customer.prototype.buyPizza = function (orderedPizzaName) {
-  
-}
 
-Customer.prototype.eatPizza = function () {
+  var callback = this.withdrawBalance.bind(this);
 
-}
+  var boughtPizza = this._pizzeria.orderPizza(orderedPizzaName, callback);
+
+  return boughtPizza;
+};
+
+Customer.prototype.eatPizza = function (pizza) {
+  console.log('It was a nice ' + pizza.getName() + '!');
+  this._pizzasInStomach.push(pizza);
+  this._satisfaction++;
+};
 
 Customer.prototype.eatPizzaAsync = function (callback) {
   setTimeout(
