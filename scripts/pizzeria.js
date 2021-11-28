@@ -30,10 +30,6 @@ Pizzeria.prototype.removePizzaByName = function (name) {
   this._frozenPizzas.splice(indexOfPizza, 1);
 };
 
-Pizzeria.prototype.increaseBalance = function (amount) {
-  this._balance = this._balance + amount;
-};
-
 Pizzeria.prototype.orderPizza = function (orderedPizzaName, cbWithdrawCustomerBalance) {
   // var foundPizza = this.removePizzaByName(orderedPizzaName);
 
@@ -51,45 +47,37 @@ Pizzeria.prototype.orderPizza = function (orderedPizzaName, cbWithdrawCustomerBa
   }
 
   foundPizza.setReady();
-
   this.removePizzaByName(orderedPizzaName);
-
   cbWithdrawCustomerBalance(foundPizza.getPrice());
-
-  this.increaseBalance(foundPizza.getPrice());
+  this._balance = this._balance + foundPizza.getPrice();
 
   return foundPizza;
 };
 
-// Pizzeria.prototype.orderPizza = function (orderedPizzaName, pizzaPrice) {
-//   var foundPizza;
-//   this._frozenPizzas.forEach(function (pizza) {
-//     if (pizza.getName() === orderedPizzaName) {
-//       foundPizza = pizza;
-//     }
-//   });
+Pizzeria.prototype.orderPizzaAsync = function (orderedPizzaName, cbWithdrawCustomerBalance, callback) {
+  setTimeout(
+    function () {
+      var error;
+      var foundPizza;
+      this._frozenPizzas.forEach(function (pizza) {
+        if (pizza.getName() === orderedPizzaName) {
+          foundPizza = pizza;
+        }
+      });
 
-//   foundPizza.setReady();
+      if (!foundPizza) {
+        error = new Error('There is no such pizza!');
+      } else {
+        foundPizza.setReady();
+        this.removePizzaByName(orderedPizzaName);
+        cbWithdrawCustomerBalance(foundPizza.getPrice());
+        this._balance = this._balance + foundPizza.getPrice();
+      }
 
-//   this.increaseBalance(pizzaPrice);
+      callback(error, foundPizza);
+      console.log('found pizza in orderPizza',foundPizza);
 
-//   this.removePizzaByName(foundPizza);
-
-//   return foundPizza;
-// }
-
-
-// Pizzeria.prototype.orderPizza = function (isVegan, pizzaPrice) {
-//   if (isVegan) {
-//     var foundPizza;
-//     console.log(this._frozenPizzas);
-//     this._frozenPizzas.forEach(function (pizza) {
-//       if (pizza instanceof VeganPizza) {
-//         foundPizza = pizza;
-//       }
-//     });
-
-//     return foundPizza;
-//   }
-
-// }
+    }.bind(this),
+    2000
+  );
+};

@@ -7,10 +7,7 @@ var pizzaCheesy = new NonVeganPizza('Cheesy', 40,  120 );
 var mafia = new Pizzeria('Mafia', [
   pizzaSeitan,
   pizzaRice,
-  pizzaCheesy,
-  pizzaCheesy,
-  pizzaCheesy,
-  pizzaSeitan,
+  pizzaCheesy
 ]);
 
 
@@ -21,9 +18,8 @@ var tom = new Customer('Tom', 0, 50);
 // console.log('orderedPizza', orderedPizza);
 tom.setPizzeria(mafia);
 console.log('chosen pizzeria', tom.getPizzeria());
-var boughtPizza = tom.buyPizza('Cheesy', mafia);
-console.log('bought pizza', boughtPizza);
-tom.eatPizza(boughtPizza);
+tom.buyPizza('Seitanum');
+tom.eatPizza();
 
 console.log('pizzas in customer stomach', tom.getPizzas());
 console.log('pizzas in pizzeria fridge', mafia.getFrozenPizzas());
