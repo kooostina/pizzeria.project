@@ -56,18 +56,18 @@ Customer.prototype.withdrawBalance = function (amount) {
 
 
 // // My new buyPizza method
-// Customer.prototype.buyPizza = function (orderedPizzaName) {
+Customer.prototype.buyPizza = function (orderedPizzaName) {
 
-//   var callback = this.withdrawBalance.bind(this);
+  var callback = this.withdrawBalance.bind(this);
 
-//   // console.log(this._pizzeria);
+  // console.log(this._pizzeria);
 
-//   var boughtPizza = this._pizzeria.orderPizza(orderedPizzaName, callback);
+  var boughtPizza = this._pizzeria.orderPizza(orderedPizzaName, callback);
 
-//   this._pizzas.push(boughtPizza);
+  this._pizzas.push(boughtPizza);
 
-//   // console.log(this._pizzas);
-// };
+  // console.log(this._pizzas);
+};
 
 // My new buyPizza method
 Customer.prototype.buyPizzaAsync = function (orderedPizzaName, callback) {
@@ -85,7 +85,7 @@ Customer.prototype.buyPizzaAsync = function (orderedPizzaName, callback) {
         this._pizzas.push(boughtPizza);
       } else {
         error = new Error('Pizza can not be bought!');
-      }
+      } 
       callback(error, boughtPizza);
     }.bind(this),
     2000

@@ -38,11 +38,14 @@ tom.buyPizzaAsync('Seitanum', function (error, pizza) {
       } else {
         console.log(pizza);
       }
+      tom.eatPizza();
     });
+
   });
+
 });
 
-tom.eatPizza();
+
 
 // console.log('pizzas in customer stomach', tom.getPizzas());
 // console.log('pizzas in pizzeria fridge', mafia.getFrozenPizzas());

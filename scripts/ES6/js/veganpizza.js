@@ -1,11 +1,13 @@
-function VeganPizza(name, price, proteinContent) {
-  Pizza.call(this, name, price);
-  this._proteinContent = proteinContent;
+import Pizza from './pizza.js'
+
+export default class VeganPizza extends Pizza {
+  #proteinContent;
+  constructor(name, price, proteinContent) {
+    super(name, price);
+    this.#proteinContent = proteinContent;
+  }
+
+  get proteinContent() {
+    return this.#proteinContent;
+  }
 }
-
-VeganPizza.prototype = Object.create(Pizza.prototype);
-VeganPizza.prototype.constructor = VeganPizza;
-
-VeganPizza.prototype.getProteinContent = function () {
-  return this._proteinContent;
-};

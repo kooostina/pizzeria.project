@@ -1,148 +1,83 @@
-function Customer(name, satisfaction, balance) {
-  this._name = name;
-  this._satisfaction = satisfaction;
-  this._pizzas = [];
-  this._pizzeria = null;
-  this._balance = balance;
-}
+export default class Customer {
+  #name;
+  #satisfaction;
+  #balance;
+  #pizzas;
+  #pizzeria;
+  constructor(name, satisfaction, balance) {
+    this.#name = name;
+    this.#satisfaction = satisfaction;
+    this.#balance = balance;
+    this.#pizzas = [];
+    this.#pizzeria = null;
+  }
 
-Customer.prototype.getName = function () {
-  return this._name;
-};
+  get name() {
+    return this.#name;
+  }
 
-Customer.prototype.getSatisfaction = function () {
-  return this._satisfaction;
-};
+  get satisfaction() {
+    return this.#satisfaction;
+  }
 
-Customer.prototype.getPizzas = function () {
-  return this._pizzas;
-};
+  get balance() {
+    return this.#balance;
+  }
 
-Customer.prototype.getPizzeria = function () {
-  return this._pizzeria;
-};
+  get pizzas() {
+    return this.#pizzas;
+  }
 
-Customer.prototype.setPizzeria = function (pizzeria) {
-  this._pizzeria = pizzeria;
-};
+  get pizzeria() {
+    return this.#pizzeria;
+  }
 
-Customer.prototype.getBalance = function () {
-  return this._balance;
-};
+  choosePizzeria(pizzeria) {
+    this.#pizzeria = pizzeria;
+  }
 
-Customer.prototype.increaseBalance = function (amount) {
-  this._balance = this._balance + amount;
-};
+  increaseBalance(amount) {
+    this.#balance += amount;
+  }
 
-Customer.prototype.withdrawBalance = function (amount) {
-  this._balance = this._balance - amount;
-};
+  withdrawBalance(amount) {
+    this.#balance -= amount;
+  }
 
-// My old buyPizza method
-// Customer.prototype.buyPizza = function (orderedPizzaName) {
+  buyPizza(orderedPizzaName) {
+    // const callback = this.withdrawBalance.bind(this);
 
-//   var callback = this.withdrawBalance.bind(this);
+    const boughtPizza = this.#pizzeria.orderPizza(orderedPizzaName, amount => this.withdrawBalance(amount) /*amount => this.#balance -= amount*/ );
 
-//   var boughtPizza = this._pizzeria.orderPizza(orderedPizzaName, callback);
+    this.#pizzas.push(boughtPizza);
+  }
 
-//   return boughtPizza;
-// };
+  buyPizzaAsync(orderedPizzaName, callback) {
+    setTimeout(() => {
+      let error;
+      let boughtPizza;
 
-// Customer.prototype.eatPizza = function (pizza) {
-//   console.log('It was a nice ' + pizza.getName() + '!');
-//   this._pizzas.push(pizza);
-//   this._satisfaction++;
-// };
-
-
-// // My new buyPizza method
-// Customer.prototype.buyPizza = function (orderedPizzaName) {
-
-//   var callback = this.withdrawBalance.bind(this);
-
-//   // console.log(this._pizzeria);
-
-//   var boughtPizza = this._pizzeria.orderPizza(orderedPizzaName, callback);
-
-//   this._pizzas.push(boughtPizza);
-
-//   // console.log(this._pizzas);
-// };
-
-// My new buyPizza method
-Customer.prototype.buyPizzaAsync = function (orderedPizzaName, callback) {
-  setTimeout(
-    function () {
-      var error;
-      var boughtPizza;
-      var withdrawBalance = this.withdrawBalance.bind(this);
-
-      boughtPizza = this._pizzeria.orderPizza(orderedPizzaName, withdrawBalance);
+      boughtPizza = this.#pizzeria.orderPizza(orderedPizzaName, amount => this.withdrawBalance(amount));
 
       // console.log('bought pizza', boughtPizza);
 
       if (boughtPizza) {
-        this._pizzas.push(boughtPizza);
+        this.#pizzas.push(boughtPizza);
       } else {
         error = new Error('Pizza can not be bought!');
       }
       callback(error, boughtPizza);
-    }.bind(this),
-    2000
-  )
-};
+    }, 2000)
+  }
 
+  buyPizzaAsyncPromises()
 
-// buyPizza method with async orderPizza
-// Customer.prototype.buyPizza = function (orderedPizzaName) {
+  eatPizza() {
+    this.#pizzas.forEach(pizza => {
+      console.log(`It was a nice ${pizza.name}!`);
+      this.#satisfaction++;
+    });
 
-//   var cbWithdrawCustomerBalance = this.withdrawBalance.bind(this);
-
-//   // console.log(this._pizzeria);
-
-//   this._pizzeria.orderPizzaAsync(orderedPizzaName, cbWithdrawCustomerBalance, function (error, pizza) {
-//     if (error) {
-//       console.log(error);
-//     } else {
-//       this._pizzas.push(pizza);
-//     }
-
-//     this._pizzeria.orderPizzaAsync(orderedPizzaName, cbWithdrawCustomerBalance, function (error, pizza) {
-//       if (error) {
-//         console.log(error);
-//       } else {
-//         this._pizzas.push(pizza);
-//       }
-
-//       this._pizzeria.orderPizzaAsync(orderedPizzaName, cbWithdrawCustomerBalance, function (error, pizza) {
-//         if (error) {
-//           console.log(error);
-//         } else {
-//           this._pizzas.push(pizza);
-//         }
-//       });
-//     });
-
-//   });
-// };
-// this._pizzas.push(pizza);
-Customer.prototype.eatPizza = function () {
-
-  this._pizzas.forEach(function (pizza) {
-    console.log('It was a nice ' + pizza.getName() + '!');
-    this._satisfaction++;
-  }.bind(this));
-
-  this._pizzas = [];
-};
-
-
-
-// Customer.prototype.eatPizzaAsync = function (callback) {
-//   setTimeout(
-//     function () {
-//       console.log('Pizza eaten');
-//       callback();
-//     },
-//     3000);
-// };
+    this.#pizzas = [];
+  }
+}

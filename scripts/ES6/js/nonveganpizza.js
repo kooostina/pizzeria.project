@@ -1,11 +1,13 @@
-function NonVeganPizza(name, price, cholesterolContent) {
-  Pizza.call(this, name, price);
-  this._cholesterolContent = cholesterolContent;
+import Pizza from './pizza.js'
+
+export default class NonVeganPizza extends Pizza {
+  #cholesterolContent;
+  constructor(name, price, cholesterolContent) {
+    super(name, price);
+    this.#cholesterolContent = cholesterolContent;
+  }
+
+  get cholesterolContent() {
+    return this.#cholesterolContent;
+  }
 }
-
-NonVeganPizza.prototype = Object.create(Pizza.prototype);
-NonVeganPizza.prototype.constructor = NonVeganPizza;
-
-NonVeganPizza.prototype.getCholesterolContent = function () {
-  return this._cholesterolContent;
-};

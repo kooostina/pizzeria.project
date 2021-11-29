@@ -1,21 +1,26 @@
-function Pizza(name, price) {
-  this._name = name;
-  this._price = price;
-  this._readiness = false;
+
+export default class Pizza {
+  #name;
+  #price;
+  #readiness;
+  constructor(name, price) {
+    this.#name = name;
+    this.#price = price;
+    this.#readiness = false;
+  }
+  get name() {
+    return this.#name;
+  }
+
+  get price() {
+    return this.#price;
+  }
+
+  get readiness() {
+    return this.#readiness;
+  }
+
+  heat() {
+    this.#readiness = true;
+  }
 }
-
-Pizza.prototype.getName = function () {
-  return this._name;
-};
-
-Pizza.prototype.getPrice = function () {
-  return this._price;
-};
-
-Pizza.prototype.getReadiness = function () {
-  return this._readiness;
-};
-
-Pizza.prototype.setReady = function () {
-  this._readiness = true;
-};

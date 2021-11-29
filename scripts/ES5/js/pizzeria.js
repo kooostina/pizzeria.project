@@ -43,7 +43,7 @@ Pizzeria.prototype.orderPizza = function (orderedPizzaName, cbWithdrawCustomerBa
   // console.log('found pizza', foundPizza);
 
   if (!foundPizza) {
-    throw new Error('There is no such pizza!');
+    return null;
   }
 
   foundPizza.setReady();
