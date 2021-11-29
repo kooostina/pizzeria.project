@@ -69,39 +69,62 @@ Customer.prototype.withdrawBalance = function (amount) {
 //   // console.log(this._pizzas);
 // };
 
+// My new buyPizza method
+Customer.prototype.buyPizzaAsync = function (orderedPizzaName, callback) {
+  setTimeout(
+    function () {
+      var error;
+      var boughtPizza;
+      var withdrawBalance = this.withdrawBalance.bind(this);
+
+      boughtPizza = this._pizzeria.orderPizza(orderedPizzaName, withdrawBalance);
+
+      // console.log('bought pizza', boughtPizza);
+
+      if (boughtPizza) {
+        this._pizzas.push(boughtPizza);
+      } else {
+        error = new Error('Pizza can not be bought!');
+      }
+      callback(error, boughtPizza);
+    }.bind(this),
+    2000
+  )
+};
+
 
 // buyPizza method with async orderPizza
-Customer.prototype.buyPizza = function (orderedPizzaName) {
+// Customer.prototype.buyPizza = function (orderedPizzaName) {
 
-  var cbWithdrawCustomerBalance = this.withdrawBalance.bind(this);
+//   var cbWithdrawCustomerBalance = this.withdrawBalance.bind(this);
 
-  // console.log(this._pizzeria);
+//   // console.log(this._pizzeria);
 
-  this._pizzeria.orderPizzaAsync(orderedPizzaName, cbWithdrawCustomerBalance, function (error, pizza) {
-    if (error) {
-      console.log(error);
-    } else {
-      this._pizzas.push(pizza);
-    }
+//   this._pizzeria.orderPizzaAsync(orderedPizzaName, cbWithdrawCustomerBalance, function (error, pizza) {
+//     if (error) {
+//       console.log(error);
+//     } else {
+//       this._pizzas.push(pizza);
+//     }
 
-    this._pizzeria.orderPizzaAsync(orderedPizzaName, cbWithdrawCustomerBalance, function (error, pizza) {
-      if (error) {
-        console.log(error);
-      } else {
-        this._pizzas.push(pizza);
-      }
+//     this._pizzeria.orderPizzaAsync(orderedPizzaName, cbWithdrawCustomerBalance, function (error, pizza) {
+//       if (error) {
+//         console.log(error);
+//       } else {
+//         this._pizzas.push(pizza);
+//       }
 
-      this._pizzeria.orderPizzaAsync(orderedPizzaName, cbWithdrawCustomerBalance, function (error, pizza) {
-        if (error) {
-          console.log(error);
-        } else {
-          this._pizzas.push(pizza);
-        }
-      });
-    });
+//       this._pizzeria.orderPizzaAsync(orderedPizzaName, cbWithdrawCustomerBalance, function (error, pizza) {
+//         if (error) {
+//           console.log(error);
+//         } else {
+//           this._pizzas.push(pizza);
+//         }
+//       });
+//     });
 
-  });
-};
+//   });
+// };
 // this._pizzas.push(pizza);
 Customer.prototype.eatPizza = function () {
 
