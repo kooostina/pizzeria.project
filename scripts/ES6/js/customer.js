@@ -50,16 +50,14 @@ export default class Customer {
     const boughtPizza = this.#pizzeria.orderPizza(orderedPizzaName, amount => this.withdrawBalance(amount) /*amount => this.#balance -= amount*/ );
 
     this.#pizzas.push(boughtPizza);
+
+    return boughtPizza;
   }
 
-  buyPizzaAsync(orderedPizzaName, callback) {
+  buyPizzaAsyncCallback(orderedPizzaName, callback) {
     setTimeout(() => {
       let error;
-      let boughtPizza;
-
-      boughtPizza = this.#pizzeria.orderPizza(orderedPizzaName, amount => this.withdrawBalance(amount));
-
-      // console.log('bought pizza', boughtPizza);
+      const boughtPizza = this.#pizzeria.orderPizza(orderedPizzaName, amount => this.withdrawBalance(amount));
 
       if (boughtPizza) {
         this.#pizzas.push(boughtPizza);
@@ -70,7 +68,21 @@ export default class Customer {
     }, 2000)
   }
 
-  buyPizzaAsyncPromises()
+  buyPizzaAsyncPromises(orderedPizzaName) {
+    return new Promise((resolve, reject) => {
+
+      setTimeout(() => {
+        const boughtPizza = this.#pizzeria.orderPizza(orderedPizzaName, amount => this.withdrawBalance(amount));
+        // console.log(boughtPizza);
+        if (boughtPizza) {
+          this.#pizzas.push(boughtPizza);
+          resolve(boughtPizza);
+        } else {
+          reject(new Error('Pizza can not be bought!'));
+        }
+      }, 2000)
+    })
+  }
 
   eatPizza() {
     this.#pizzas.forEach(pizza => {

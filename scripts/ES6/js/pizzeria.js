@@ -31,7 +31,7 @@ export default class Pizzeria {
   }
 
   orderPizza(orderedPizzaName, cbWithdrawCustomerBalance) {
-    let foundPizza = this.#frozenPizzas.find(pizza => pizza.name === orderedPizzaName);
+    const foundPizza = this.#frozenPizzas.find(pizza => pizza.name === orderedPizzaName);
 
     if (!foundPizza) {
       throw new Error('There is no such pizza!');
