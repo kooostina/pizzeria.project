@@ -62,7 +62,7 @@ export default class Customer {
 
   public buyPizzaAsyncCallback(orderedPizzaName: string, callback: IBuyPizzaCallback): void {
     setTimeout(() => {
-      let error: Error | undefined ;
+      let error: Error | undefined;
       const boughtPizza: IPizza | undefined = this._pizzeria?.orderPizza(orderedPizzaName, amount => this.withdrawBalance(amount));
 
       if (boughtPizza) {
@@ -90,6 +90,7 @@ export default class Customer {
 
   public eatPizza(): void {
     this._pizzas.forEach(pizza => {
+      console.log(`It was a nice ${pizza.name}!`);
       this._satisfaction++;
     });
 

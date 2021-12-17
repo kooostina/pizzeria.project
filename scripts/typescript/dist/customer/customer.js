@@ -70,6 +70,7 @@ export default class Customer {
     }
     eatPizza() {
         this._pizzas.forEach(pizza => {
+            console.log(`It was a nice ${pizza.name}!`);
             this._satisfaction++;
         });
         this._pizzas = [];

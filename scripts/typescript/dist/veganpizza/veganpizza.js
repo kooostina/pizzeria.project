@@ -1,4 +1,4 @@
-import Pizza from '../pizza/pizza';
+import Pizza from '../pizza/pizza.js';
 export default class VeganPizza extends Pizza {
     constructor(name, price, proteinContent) {
         super(name, price);

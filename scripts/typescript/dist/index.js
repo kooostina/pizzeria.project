@@ -1,7 +1,16 @@
-import VeganPizza from './veganpizza/veganpizza';
-import NonVeganPizza from './nonveganpizza/nonveganpizza';
-import Customer from './customer/customer';
-import Pizzeria from './pizzeria/pizzeria';
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+import VeganPizza from './veganpizza/veganpizza.js';
+import NonVeganPizza from './nonveganpizza/nonveganpizza.js';
+import Customer from './customer/customer.js';
+import Pizzeria from './pizzeria/pizzeria.js';
 const pizzaSeitan = new VeganPizza('Seitanum', 17, 20);
 const pizzaRice = new VeganPizza('Risotto', 25, 20);
 const pizzaCheesy = new NonVeganPizza('Cheesy', 40, 120);
@@ -51,18 +60,21 @@ tom.choosePizzeria(mafia);
 //   .catch(error => {
 //     console.log(error.message);
 //   })
-async function buyPizzaAsyncAwait() {
-    try {
-        const firstPizza = await tom.buyPizzaAsyncPromises('Risotto');
-        console.log(firstPizza);
-        const secondPizza = await tom.buyPizzaAsyncPromises('Cheesy');
-        console.log(secondPizza);
-        const thirdPizza = await tom.buyPizzaAsyncPromises('Seitanum');
-        console.log(thirdPizza);
-        tom.eatPizza();
-    }
-    catch (error) {
-        console.log(error);
-    }
+function buyPizzaAsyncAwait() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const firstPizza = yield tom.buyPizzaAsyncPromises('Risotto');
+            console.log('first pizza bought', firstPizza);
+            const secondPizza = yield tom.buyPizzaAsyncPromises('Cheesy');
+            console.log('second pizza bought', secondPizza);
+            const thirdPizza = yield tom.buyPizzaAsyncPromises('Seitanum');
+            console.log('third pizza bought', thirdPizza);
+            console.log('All pizzas are bought');
+            tom.eatPizza();
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
 }
 buyPizzaAsyncAwait();
